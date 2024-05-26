@@ -15,6 +15,10 @@ Future<void> initLocalStorage() async {
   _initialized = true;
 }
 
+/// Initialize the [LocalStorage].
+Future<LocalStorage> initLocalStorageNative(String storageName) {
+  return initNative(storageName);
+}
 /// Get the instance of [LocalStorage].
 LocalStorage get localStorage {
   if (_initialized) return _localStorage;

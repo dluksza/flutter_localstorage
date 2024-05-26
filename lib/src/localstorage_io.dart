@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -9,9 +10,18 @@ import './interface.dart';
 
 const kStorageFileName = 'storage-61f76cb0-842b-4318-a644-e245f50a0b5a.json';
 
-Future<LocalStorage> init() async {
+Future<LocalStorage> init() => initNative();
+
+Future<LocalStorage> initNative([
+  String storageFileName = kStorageFileName,
+]) async {
+  assert(
+    kIsWeb && storageFileName != kStorageFileName,
+    "'storageFileName' is not supported on the web",
+  );
+
   final dir = await getApplicationDocumentsDirectory();
-  final storagePath = p.join(dir.path, kStorageFileName);
+  final storagePath = p.join(dir.path, storageFileName);
 
   final storageFile = File(storagePath);
 
